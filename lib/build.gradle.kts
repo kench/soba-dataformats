@@ -8,6 +8,8 @@
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
+    // Use Flyway for database migrations
+    id("org.flywaydb.flyway") version "10.0.0"
 }
 
 repositories {
@@ -30,6 +32,9 @@ dependencies {
     // Library dependencies start here
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.20")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.20.1")
+    implementation("org.xerial:sqlite-jdbc:3.51.1.0")
+    implementation("org.jdbi:jdbi3-core:3.51.0")
+    implementation("org.jdbi:jdbi3-sqlobject:3.51.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -42,4 +47,8 @@ java {
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+flyway {
+    url = "jdbc:sqlite:/tmp/soba-test/sample.db"
 }

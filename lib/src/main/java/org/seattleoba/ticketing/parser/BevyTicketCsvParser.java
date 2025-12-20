@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * Parser for Bevy CSV file
+ * Parser for Bevy CSV file.
  */
 public class BevyTicketCsvParser {
     /**
