@@ -30,6 +30,7 @@ public class BevyTicketCsvParserTest {
 
         assertFalse(tickets.isEmpty());
         assertEquals(1, tickets.size());
+        assertEquals("TTE25065088", tickets.getFirst().orderNumber());
         assertEquals("TTA25062005", tickets.getFirst().ticketNumber());
         assertEquals("Kenley", tickets.getFirst().purchaserName());
     }
@@ -42,6 +43,7 @@ public class BevyTicketCsvParserTest {
 
         assertFalse(tickets.isEmpty());
         assertEquals(1, tickets.size());
+        assertEquals("TTE25060033", tickets.getFirst().orderNumber());
         assertEquals("TTA25057051", tickets.getFirst().ticketNumber());
         assertEquals("Kenley", tickets.getFirst().purchaserName());
     }

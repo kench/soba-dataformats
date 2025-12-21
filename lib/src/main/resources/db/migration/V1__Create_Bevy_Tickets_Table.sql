@@ -1,5 +1,6 @@
 CREATE TABLE bevy_tickets (
-    number INT PRIMARY KEY NOT NULL,
+    id INT PRIMARY KEY NOT NULL,
+    order_id VARCHAR NOT NULL,
     event_id INT NOT NULL,
     purchaser_name VARCHAR NOT NULL,
     title VARCHAR NOT NULL,
