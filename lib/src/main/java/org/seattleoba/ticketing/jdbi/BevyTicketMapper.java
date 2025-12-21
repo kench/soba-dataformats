@@ -9,6 +9,9 @@ import org.seattleoba.ticketing.util.BevyTicketNumberUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * RowMapper implementation for BevyTicket.
+ */
 public class BevyTicketMapper implements RowMapper<BevyTicket> {
     @Override
     public BevyTicket map(
