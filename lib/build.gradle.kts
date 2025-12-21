@@ -9,7 +9,7 @@ plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
     // Use Flyway for database migrations
-    id("org.flywaydb.flyway") version "10.0.0"
+    id("org.flywaydb.flyway") version "11.19.1"
 }
 
 repositories {
