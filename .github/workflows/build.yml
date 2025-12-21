@@ -22,9 +22,7 @@ jobs:
           distribution: 'corretto'
           java-version: '21'
           cache: 'gradle'
-      - name: Compile Java library
-        run: 'gradle build -i'
       - name: Run Flyway migrations
         run: 'gradle flywayMigrate -i'
-      - name: Run JUnit tests
-        run: 'gradle test -i'
+      - name: Run Gradle build
+        run: 'gradle build -i'
