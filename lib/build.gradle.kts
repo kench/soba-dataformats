@@ -10,6 +10,7 @@ plugins {
     `java-library`
     // Use Flyway for database migrations
     id("org.flywaydb.flyway") version "11.19.1"
+    id("maven-publish")
 }
 
 repositories {
@@ -51,4 +52,17 @@ tasks.named<Test>("test") {
 
 flyway {
     url = "jdbc:sqlite:/tmp/soba-test/sample.db"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/kench/soba-dataformats")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }
