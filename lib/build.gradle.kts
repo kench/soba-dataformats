@@ -67,6 +67,10 @@ publishing {
     }
     publications {
         register<MavenPublication>("gpr") {
+            groupId = "org.seattleoba"
+            artifactId = "soba-dataformats"
+            version = "1.0"
+
             from(components["java"])
         }
     }
