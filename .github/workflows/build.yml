@@ -32,7 +32,7 @@ jobs:
           name: sample.sqlite3
           path: /tmp/soba-test/sample.db
       - name: Run Gradle build
-        run: '/.gradlew build -i'
+        run: './gradlew build -i'
       - name: Publish package
         run: './gradlew publish'
         env:
