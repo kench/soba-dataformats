@@ -24,13 +24,16 @@ public class TwitchTicketsDaoTest {
     @Test
     public void insertsRowIntoTable() {
         final Integer userId = Math.toIntExact(Instant.now().getEpochSecond() % 999000000);
+        final Integer eventId = Math.toIntExact(Instant.now().getEpochSecond() % 100);
         final Integer ticketId = Math.toIntExact(Instant.now().toEpochMilli() & 100000);
         final TwitchTicketsDao dao = jdbi.onDemand(TwitchTicketsDao.class);
 
-        assertDoesNotThrow(() -> dao.insert(userId, ticketId));
+        assertDoesNotThrow(() -> dao.insert(userId, eventId, ticketId));
 
         assertEquals(userId, dao.getUserForTicket(ticketId));
+        assertEquals(userId, dao.getUserForEventAndTicket(eventId, ticketId));
         assertFalse(dao.getTicketsForUser(userId).isEmpty());
         assertEquals(ticketId, dao.getTicketsForUser(userId).getFirst());
+        assertEquals(ticketId, dao.getTicketsForUserAndEvent(userId, eventId).getFirst());
     }
 }
