@@ -24,7 +24,14 @@ public class BevyTicketMapper implements RowMapper<BevyTicket> {
         final String accessCode = resultSet.getString("access_code");
         final String price = String.valueOf(resultSet.getBigDecimal("price"));
         final String purchaseDate = toBevyTicketDate(resultSet.getLong("paid_on"));
-        final String checkInDate = toBevyTicketDate(resultSet.getLong("checked_in_at"));
+
+        final String checkInDate;
+        if (resultSet.getLong("checked_in_at") == 0) {
+            checkInDate = null;
+        } else {
+            checkInDate = toBevyTicketDate(resultSet.getLong("checked_in_at"));
+        }
+
         return new BevyTicket(
                 ticketNumber,
                 orderNumber,

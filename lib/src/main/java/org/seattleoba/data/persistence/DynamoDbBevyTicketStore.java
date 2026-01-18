@@ -9,6 +9,7 @@ import software.amazon.awssdk.enhanced.dynamodb.model.GetItemEnhancedRequest;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 public class DynamoDbBevyTicketStore implements BevyTicketStore {
@@ -61,12 +62,12 @@ public class DynamoDbBevyTicketStore implements BevyTicketStore {
 
     @Override
     public org.seattleoba.data.model.BevyTicket getTicketByTwitchId(final Integer eventId, final Integer twitchId) {
-        return null;
+        throw new IllegalStateException("Unsupported operation");
     }
 
     @Override
-    public org.seattleoba.data.model.BevyTicket getTicketsForTwitchId(final Integer twitchId) {
-        return null;
+    public List<org.seattleoba.data.model.BevyTicket> getTicketsForTwitchId(final Integer twitchId) {
+        throw new IllegalStateException("Unsupported operation");
     }
 
     @Override
