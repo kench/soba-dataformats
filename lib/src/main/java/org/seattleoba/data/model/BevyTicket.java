@@ -1,4 +1,4 @@
-package org.seattleoba.ticketing.model;
+package org.seattleoba.data.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

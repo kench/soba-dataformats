@@ -1,4 +1,4 @@
-package org.seattleoba.ticketing.util;
+package org.seattleoba.data.util;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

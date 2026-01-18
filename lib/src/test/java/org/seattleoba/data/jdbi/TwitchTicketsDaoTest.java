@@ -1,10 +1,9 @@
-package org.seattleoba.jdbi;
+package org.seattleoba.data.jdbi;
 
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.seattleoba.ticketing.jdbi.TwitchTicketsDao;
 
 import java.time.Instant;
 

@@ -36,6 +36,16 @@ dependencies {
     implementation("org.xerial:sqlite-jdbc:3.51.1.0")
     implementation("org.jdbi:jdbi3-core:3.51.0")
     implementation("org.jdbi:jdbi3-sqlobject:3.51.0")
+
+    // DynamoDB Java client
+    implementation(platform("software.amazon.awssdk:bom:2.41.10"))
+    implementation("software.amazon.awssdk:dynamodb-enhanced")
+
+    // Dependency injection
+    implementation("javax.inject:javax.inject:1")
+
+    // DynamoDB Local for unit testing
+    testImplementation("software.amazon.dynamodb:DynamoDBLocal:3.2.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

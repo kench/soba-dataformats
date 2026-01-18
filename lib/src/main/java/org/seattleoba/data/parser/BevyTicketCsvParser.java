@@ -1,10 +1,10 @@
-package org.seattleoba.ticketing.parser;
+package org.seattleoba.data.parser;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import org.seattleoba.ticketing.model.BevyTicket;
+import org.seattleoba.data.model.BevyTicket;
 
 import java.io.IOException;
 

@@ -1,8 +1,8 @@
-package org.seattleoba.ticketing.jdbi;
+package org.seattleoba.data.jdbi;
 
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
-import org.seattleoba.ticketing.model.TwitchAccount;
+import org.seattleoba.data.model.TwitchAccount;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

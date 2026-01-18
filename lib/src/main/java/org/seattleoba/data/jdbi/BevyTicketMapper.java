@@ -1,10 +1,10 @@
-package org.seattleoba.ticketing.jdbi;
+package org.seattleoba.data.jdbi;
 
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
-import org.seattleoba.ticketing.model.BevyTicket;
-import org.seattleoba.ticketing.util.BevyDateUtil;
-import org.seattleoba.ticketing.util.BevyTicketNumberUtil;
+import org.seattleoba.data.model.BevyTicket;
+import org.seattleoba.data.util.BevyDateUtil;
+import org.seattleoba.data.util.BevyTicketNumberUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,7 +1,6 @@
-package org.seattleoba.util;
+package org.seattleoba.data.util;
 
 import org.junit.jupiter.api.Test;
-import org.seattleoba.ticketing.util.BevyTicketNumberUtil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

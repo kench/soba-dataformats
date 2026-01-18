@@ -1,4 +1,4 @@
-package org.seattleoba.ticketing.util;
+package org.seattleoba.data.util;
 
 /**
  * Bevy ticket number conversion utility class

@@ -1,13 +1,12 @@
-package org.seattleoba.jdbi;
+package org.seattleoba.data.jdbi;
 
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.seattleoba.ticketing.jdbi.BevyTicketDao;
-import org.seattleoba.ticketing.model.BevyTicket;
-import org.seattleoba.ticketing.util.BevyDateUtil;
-import org.seattleoba.ticketing.util.BevyTicketNumberUtil;
+import org.seattleoba.data.model.BevyTicket;
+import org.seattleoba.data.util.BevyDateUtil;
+import org.seattleoba.data.util.BevyTicketNumberUtil;
 
 import java.math.BigDecimal;
 import java.time.Instant;

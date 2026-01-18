@@ -1,10 +1,10 @@
-package org.seattleoba.ticketing.jdbi;
+package org.seattleoba.data.jdbi;
 
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
-import org.seattleoba.ticketing.model.TwitchAccount;
+import org.seattleoba.data.model.TwitchAccount;
 
 import java.util.List;
 

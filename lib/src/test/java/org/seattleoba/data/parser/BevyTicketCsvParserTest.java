@@ -1,9 +1,8 @@
-package org.seattleoba.parser;
+package org.seattleoba.data.parser;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.seattleoba.ticketing.model.BevyTicket;
-import org.seattleoba.ticketing.parser.BevyTicketCsvParser;
+import org.seattleoba.data.model.BevyTicket;
 
 import java.io.InputStream;
 import java.util.List;
