@@ -5,6 +5,7 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seattleoba.data.jdbi.BevyTicketDao;
+import org.seattleoba.data.jdbi.TwitchTicketsDao;
 import org.seattleoba.data.util.BevyTicketNumberUtil;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,8 +20,10 @@ public class JdbiBevyTicketStoreTest {
     private static final String PURCHASER_NAME = "Kenley";
     private static final String TICKET_NUMBER = "TTA25062005";
     private static final String TICKET_TYPE = "General Admission";
+    private static final Integer TWITCH_ID = 84;
 
     private BevyTicketStore bevyTicketStore;
+    private TwitchTicketsDao twitchTicketsDao;
 
     @BeforeEach
     public void setup() {
@@ -29,6 +32,7 @@ public class JdbiBevyTicketStoreTest {
         jdbi.installPlugin(new SqlObjectPlugin());
         bevyTicketStore = new JdbiBevyTicketStore(
                 jdbi.onDemand(BevyTicketDao.class));
+        twitchTicketsDao = jdbi.onDemand(TwitchTicketsDao.class);
     }
 
     @Test
@@ -53,5 +57,14 @@ public class JdbiBevyTicketStoreTest {
         assertEquals(PURCHASE_DATE, result.purchaseDate());
         assertNull(result.checkInDate());
         assertEquals(ACCESS_CODE, result.accessCode());
+    }
+
+    @Test
+    public void retrievesTicketByTwitchId() {
+        final Integer ticketNumber = BevyTicketNumberUtil.toInteger(TICKET_NUMBER);
+        twitchTicketsDao.insert(TWITCH_ID, EVENT_ID, ticketNumber);
+
+        assertEquals(TICKET_NUMBER, bevyTicketStore.getTicketByTwitchId(EVENT_ID, TWITCH_ID).ticketNumber());
+        assertFalse(bevyTicketStore.getTicketsForTwitchId(TWITCH_ID).isEmpty());
     }
 }

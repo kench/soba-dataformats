@@ -24,6 +24,26 @@ public interface BevyTicketDao {
     List<BevyTicket> findByTicketNumber(@Bind("id") int ticketNumber);
 
     /**
+     * Finds all Bevy tickets for the given Twitch ID.
+     *
+     * @param twitchId Twitch ID
+     * @return Matching Bevy tickets.
+     */
+    @SqlQuery("SELECT * FROM bevy_tickets JOIN twitch_accounts_bevy_tickets ON bevy_tickets.id = twitch_accounts_bevy_tickets.bevy_ticket_id WHERE twitch_id=:twitch_id AND bevy_event_id=:event_id;")
+    @RegisterRowMapper(BevyTicketMapper.class)
+    List<BevyTicket> findByEventAndTwitchId(@Bind("event_id") int eventId, @Bind("twitch_id") int twitchId);
+
+    /**
+     * Finds all Bevy tickets for the given Twitch ID.
+     *
+     * @param twitchId Twitch ID
+     * @return Matching Bevy tickets.
+     */
+    @SqlQuery("SELECT * FROM bevy_tickets JOIN twitch_accounts_bevy_tickets ON bevy_tickets.id = twitch_accounts_bevy_tickets.bevy_ticket_id WHERE twitch_id=:id;")
+    @RegisterRowMapper(BevyTicketMapper.class)
+    List<BevyTicket> getTicketsByTwitchId(@Bind("id") int twitchId);
+
+    /**
      * Inserts an entry into the Bevy tickets table.
      *
      * @param eventId Bevy event ID

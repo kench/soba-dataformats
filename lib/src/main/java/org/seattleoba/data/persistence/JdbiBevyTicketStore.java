@@ -25,12 +25,12 @@ public class JdbiBevyTicketStore implements BevyTicketStore {
 
     @Override
     public BevyTicket getTicketByTwitchId(final Integer eventId, final Integer twitchId) {
-        throw new IllegalStateException("Unsupported operation");
+        return bevyTicketDao.findByEventAndTwitchId(eventId, twitchId).getFirst();
     }
 
     @Override
     public List<BevyTicket> getTicketsForTwitchId(final Integer twitchId) {
-        throw new IllegalStateException("Unsupported operation");
+        return bevyTicketDao.getTicketsByTwitchId(twitchId);
     }
 
     @Override
