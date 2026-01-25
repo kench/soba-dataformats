@@ -10,7 +10,7 @@ public class EventRegistration {
 
     @DynamoDbPartitionKey
     @DynamoDbSecondarySortKey(indexNames = "EventId")
-    @DynamoDbAttribute("id")
+    @DynamoDbAttribute("bevy_ticket_id")
     public Integer getId() {
         return id;
     }
