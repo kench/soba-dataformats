@@ -14,7 +14,7 @@ import javax.inject.Singleton;
 @Module
 public class DataModule {
     private static final String BEVY_TICKET_TABLE_NAME = "BevyTickets";
-    private static final String EVENT_REGISTRATION_TABLE_NAME = "EventRegistrations";
+    private static final String EVENT_REGISTRATION_TABLE_NAME = "TwitchAccountsBevyTickets";
     private static final String TWITCH_ACCOUNT_TABLE_NAME = "TwitchAccounts";
 
     @Provides
