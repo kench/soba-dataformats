@@ -42,8 +42,9 @@ dependencies {
     implementation("software.amazon.awssdk:dynamodb-enhanced")
 
     // Dependency injection
-    implementation("javax.inject:javax.inject:1")
     implementation("com.google.dagger:dagger:2.53.1")
+    annotationProcessor("javax.annotation:javax.annotation-api:1.3.2")
+    annotationProcessor("com.google.dagger:dagger-compiler:2.53.1")
 
     // DynamoDB Local for unit testing
     testImplementation("software.amazon.dynamodb:DynamoDBLocal:3.2.0")
