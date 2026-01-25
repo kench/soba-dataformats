@@ -3,6 +3,7 @@ package org.seattleoba.data.persistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seattleoba.data.dynamodb.bean.BevyTicket;
+import org.seattleoba.data.dynamodb.bean.EventRegistration;
 import org.seattleoba.data.util.BevyTicketNumberUtil;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
@@ -21,6 +22,7 @@ public class DynamoDbBevyTicketStoreTest {
     private static final String TICKET_TYPE = "General Admission";
     private DynamoDbEnhancedClient dynamoDbEnhancedClient;
     private DynamoDbTable<BevyTicket> bevyTicketsTable;
+    private DynamoDbTable<EventRegistration> eventRegistrationTable;
     private BevyTicketStore bevyTicketStore;
 
     @BeforeEach
@@ -30,7 +32,9 @@ public class DynamoDbBevyTicketStoreTest {
                 .build();
         bevyTicketsTable = dynamoDbEnhancedClient.table("BevyTickets", TableSchema.fromBean(BevyTicket.class));
         bevyTicketsTable.createTable();
-        bevyTicketStore = new DynamoDbBevyTicketStore(bevyTicketsTable);
+        eventRegistrationTable = dynamoDbEnhancedClient.table("EventRegistrations", TableSchema.fromBean(EventRegistration.class));
+        eventRegistrationTable.createTable();
+        bevyTicketStore = new DynamoDbBevyTicketStore(bevyTicketsTable, eventRegistrationTable);
     }
 
     @Test

@@ -8,6 +8,8 @@ import org.seattleoba.data.jdbi.BevyTicketDao;
 import org.seattleoba.data.jdbi.TwitchTicketsDao;
 import org.seattleoba.data.util.BevyTicketNumberUtil;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JdbiBevyTicketStoreTest {
@@ -61,10 +63,23 @@ public class JdbiBevyTicketStoreTest {
 
     @Test
     public void retrievesTicketByTwitchId() {
-        final Integer ticketNumber = BevyTicketNumberUtil.toInteger(TICKET_NUMBER);
-        twitchTicketsDao.insert(TWITCH_ID, EVENT_ID, ticketNumber);
+        final Random random = new Random();
+        final Integer ticketNumber = random.nextInt(1000);
+        final Integer eventId = random.nextInt();
+        final Integer twitchId = random.nextInt();
+        final org.seattleoba.data.model.BevyTicket bevyTicket = new org.seattleoba.data.model.BevyTicket(
+                BevyTicketNumberUtil.toString(ticketNumber),
+                ORDER_NUMBER,
+                PURCHASER_NAME,
+                TICKET_TYPE,
+                PURCHASE_DATE,
+                null,
+                ACCESS_CODE,
+                "0");
+        bevyTicketStore.insertBevyTicket(eventId, bevyTicket);
+        twitchTicketsDao.insert(twitchId, eventId, ticketNumber);
 
-        assertEquals(TICKET_NUMBER, bevyTicketStore.getTicketByTwitchId(EVENT_ID, TWITCH_ID).ticketNumber());
-        assertFalse(bevyTicketStore.getTicketsForTwitchId(TWITCH_ID).isEmpty());
+        assertEquals(BevyTicketNumberUtil.toString(ticketNumber), bevyTicketStore.getTicketByTwitchId(eventId, twitchId).ticketNumber());
+        assertFalse(bevyTicketStore.getTicketsForTwitchId(twitchId).isEmpty());
     }
 }

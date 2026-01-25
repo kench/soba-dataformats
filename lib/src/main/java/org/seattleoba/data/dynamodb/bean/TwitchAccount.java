@@ -34,4 +34,49 @@ public class TwitchAccount {
     public void setUserName(final String userName) {
         this.userName = userName;
     }
+
+    @DynamoDbAttribute("display_name")
+    public String getDisplayName() {
+        return this.displayName;
+    }
+
+    public void setDisplayName(final String displayName) {
+        this.displayName = displayName;
+    }
+
+    @DynamoDbAttribute("user_type")
+    public String getUserType() {
+        return this.userType;
+    }
+
+    public void setUserType(final String userType) {
+        this.userType = userType;
+    }
+
+    @DynamoDbAttribute("broadcaster_type")
+    public String getBroadcasterType() {
+        return this.broadcasterType;
+    }
+
+    public void setBroadcasterType(final String broadcasterType) {
+        this.broadcasterType = broadcasterType;
+    }
+
+    @DynamoDbAttribute("description")
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    @DynamoDbAttribute("created_at")
+    public Long getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(final Long createdAt) {
+        this.createdAt = createdAt;
+    }
 }

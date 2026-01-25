@@ -1,9 +1,6 @@
 package org.seattleoba.data.dynamodb.bean;
 
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 
 @DynamoDbBean
 public class EventRegistration {
@@ -12,6 +9,7 @@ public class EventRegistration {
     private Integer twitchId;
 
     @DynamoDbPartitionKey
+    @DynamoDbSecondarySortKey(indexNames = "EventId")
     @DynamoDbAttribute("id")
     public Integer getId() {
         return id;
@@ -22,6 +20,7 @@ public class EventRegistration {
     }
 
     @DynamoDbSecondaryPartitionKey(indexNames = "EventId")
+    @DynamoDbSecondarySortKey(indexNames = "UserId")
     @DynamoDbAttribute(value = "bevy_event_id")
     public Integer getEventId() {
         return eventId;

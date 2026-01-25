@@ -43,6 +43,7 @@ dependencies {
 
     // Dependency injection
     implementation("javax.inject:javax.inject:1")
+    implementation("com.google.dagger:dagger:2.53.1")
 
     // DynamoDB Local for unit testing
     testImplementation("software.amazon.dynamodb:DynamoDBLocal:3.2.0")
