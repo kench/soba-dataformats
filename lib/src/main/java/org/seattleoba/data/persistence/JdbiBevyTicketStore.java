@@ -60,6 +60,7 @@ public class JdbiBevyTicketStore implements BevyTicketStore {
                 eventId,
                 bevyTicket.orderNumber(),
                 BevyTicketNumberUtil.toInteger(bevyTicket.ticketNumber()),
+                bevyTicket.ticketNumber(),
                 bevyTicket.purchaserName(),
                 bevyTicket.ticketType(),
                 purchaseDate,

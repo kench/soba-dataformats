@@ -49,6 +49,7 @@ public interface BevyTicketDao {
      * @param eventId Bevy event ID
      * @param orderNumber Bevy order number
      * @param ticketNumber Bevy ticket number
+     * @param ticketId Bevy ticket ID
      * @param purchaserName Ticket purchaser
      * @param ticketType Ticket type
      * @param purchaseDate Ticket purchase date.
@@ -56,11 +57,12 @@ public interface BevyTicketDao {
      * @param accessCode Access code used to purchase ticket, if one exists.
      * @param price Ticket price, if this was a paid ticket.
      */
-    @SqlUpdate("INSERT INTO bevy_tickets (event_id, order_id, id, purchaser_name, title, paid_on, checked_in_at, access_code, price) VALUES (:event_id, :order_id, :ticket_id, :purchaser_name, :ticket_type, :purchase_date, :check_in_date, :access_code, :price)")
+    @SqlUpdate("INSERT INTO bevy_tickets (event_id, order_id, id, ticket_id, purchaser_name, title, paid_on, checked_in_at, access_code, price) VALUES (:event_id, :order_id, :id, :ticket_id, :purchaser_name, :ticket_type, :purchase_date, :check_in_date, :access_code, :price)")
     void insert(
             @Bind("event_id") int eventId,
             @Bind("order_id") String orderNumber,
-            @Bind("ticket_id") int ticketNumber,
+            @Bind("id") int ticketNumber,
+            @Bind("ticket_id") String ticketId,
             @Bind("purchaser_name") String purchaserName,
             @Bind("ticket_type") String ticketType,
             @Bind("purchase_date") Long purchaseDate,

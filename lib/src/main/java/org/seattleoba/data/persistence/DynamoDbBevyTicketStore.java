@@ -59,7 +59,7 @@ public class DynamoDbBevyTicketStore implements BevyTicketStore {
         }
 
         return new org.seattleoba.data.model.BevyTicket(
-                BevyTicketNumberUtil.toString(bevyTicket.getId()),
+                bevyTicket.getTicketId(),
                 bevyTicket.getOrderId(),
                 bevyTicket.getPurchaserName(),
                 bevyTicket.getTicketType(),
@@ -104,6 +104,7 @@ public class DynamoDbBevyTicketStore implements BevyTicketStore {
     public void insertBevyTicket(final Integer eventId, final org.seattleoba.data.model.BevyTicket bevyTicket) {
         final BevyTicket ticket = new BevyTicket();
         ticket.setEventId(eventId);
+        ticket.setTicketId(bevyTicket.ticketNumber());
         ticket.setId(BevyTicketNumberUtil.toInteger(bevyTicket.ticketNumber()));
         ticket.setOrderId(bevyTicket.orderNumber());
         ticket.setPurchaserName(bevyTicket.purchaserName());

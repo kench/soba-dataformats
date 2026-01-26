@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BevyTicketDaoTest {
     private static final String ACCESS_CODE = "TESTING";
     private static final Integer EVENT_ID = 42;
+    private static final String TICKET_ID = "TTA24047035";
     private static final String JDBI_URL = "jdbc:sqlite:/tmp/soba-test/sample.db";
     private static final String ORDER_ID = "TTE25065088";
     private static final BigDecimal PRICE = new BigDecimal("4.99");
@@ -34,17 +35,17 @@ public class BevyTicketDaoTest {
     @Test
     public void insertsRowIntoTable() {
         final Instant instant = Instant.now();
-        final int ticketNumber = Math.toIntExact(instant.getEpochSecond() % 100000);
+        final int ticketNumber = BevyTicketNumberUtil.toInteger(TICKET_ID);
         final Long purchaseDate = instant.minusSeconds(60).getEpochSecond();
         final Long checkInDate = instant.plusSeconds(120).getEpochSecond();
         final BevyTicketDao dao = jdbi.onDemand(BevyTicketDao.class);
 
         assertDoesNotThrow(() ->
-                dao.insert(EVENT_ID, ORDER_ID, ticketNumber, PURCHASER_NAME, TICKET_TYPE, purchaseDate, checkInDate, ACCESS_CODE, PRICE));
+                dao.insert(EVENT_ID, ORDER_ID, ticketNumber, TICKET_ID, PURCHASER_NAME, TICKET_TYPE, purchaseDate, checkInDate, ACCESS_CODE, PRICE));
         final List<BevyTicket> output = dao.findByTicketNumber(ticketNumber);
 
         assertFalse(output.isEmpty());
-        assertEquals(BevyTicketNumberUtil.toString(ticketNumber), output.getFirst().ticketNumber());
+        assertEquals(TICKET_ID, output.getFirst().ticketNumber());
         assertEquals(ORDER_ID, output.getFirst().orderNumber());
         assertEquals(PURCHASER_NAME, output.getFirst().purchaserName());
         assertEquals(TICKET_TYPE, output.getFirst().ticketType());

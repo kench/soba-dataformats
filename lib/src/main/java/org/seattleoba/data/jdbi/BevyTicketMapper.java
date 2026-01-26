@@ -17,7 +17,7 @@ public class BevyTicketMapper implements RowMapper<BevyTicket> {
     public BevyTicket map(
             final ResultSet resultSet,
             final StatementContext statementContext) throws SQLException {
-        final String ticketNumber = BevyTicketNumberUtil.toString(resultSet.getInt("id"));
+        final String ticketNumber = resultSet.getString("ticket_id");
         final String orderNumber = resultSet.getString("order_id");
         final String purchaserName = resultSet.getString("purchaser_name");
         final String ticketType = resultSet.getString("title");

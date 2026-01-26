@@ -21,6 +21,7 @@ public class JdbiBevyTicketStoreTest {
     private static final String PURCHASE_DATE = "2025-11-11 00:48:57+00:00";
     private static final String PURCHASER_NAME = "Kenley";
     private static final String TICKET_NUMBER = "TTA25062005";
+    private static final String SECOND_TICKET_NUMBER = "TTA24047055";
     private static final String TICKET_TYPE = "General Admission";
     private static final Integer TWITCH_ID = 84;
 
@@ -63,12 +64,12 @@ public class JdbiBevyTicketStoreTest {
 
     @Test
     public void retrievesTicketByTwitchId() {
+        final Integer ticketNumber = BevyTicketNumberUtil.toInteger(SECOND_TICKET_NUMBER);
         final Random random = new Random();
-        final Integer ticketNumber = random.nextInt(1000);
         final Integer eventId = random.nextInt();
         final Integer twitchId = random.nextInt();
         final org.seattleoba.data.model.BevyTicket bevyTicket = new org.seattleoba.data.model.BevyTicket(
-                BevyTicketNumberUtil.toString(ticketNumber),
+                SECOND_TICKET_NUMBER,
                 ORDER_NUMBER,
                 PURCHASER_NAME,
                 TICKET_TYPE,
@@ -79,7 +80,7 @@ public class JdbiBevyTicketStoreTest {
         bevyTicketStore.insertBevyTicket(eventId, bevyTicket);
         twitchTicketsDao.insert(twitchId, eventId, ticketNumber);
 
-        assertEquals(BevyTicketNumberUtil.toString(ticketNumber), bevyTicketStore.getTicketByTwitchId(eventId, twitchId).ticketNumber());
+        assertEquals(SECOND_TICKET_NUMBER, bevyTicketStore.getTicketByTwitchId(eventId, twitchId).ticketNumber());
         assertFalse(bevyTicketStore.getTicketsForTwitchId(twitchId).isEmpty());
     }
 }

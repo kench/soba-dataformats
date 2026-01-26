@@ -12,9 +12,4 @@ public class BevyTicketNumberUtilTest {
     public void returnsRawTicketNumber() {
         assertEquals(RAW_TICKET_NUMBER, BevyTicketNumberUtil.toInteger(BEVY_TICKET_NUMBER));
     }
-
-    @Test
-    public void returnBevyTicketNumber() {
-        assertEquals(BEVY_TICKET_NUMBER, BevyTicketNumberUtil.toString(RAW_TICKET_NUMBER));
-    }
 }

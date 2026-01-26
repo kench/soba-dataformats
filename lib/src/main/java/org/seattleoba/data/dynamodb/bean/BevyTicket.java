@@ -1,15 +1,13 @@
 package org.seattleoba.data.dynamodb.bean;
 
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 
 import java.math.BigDecimal;
 
 @DynamoDbBean
 public class BevyTicket {
     private Integer id;
+    private String ticketId;
     private Integer eventId;
     private String orderId;
     private String purchaserName;
@@ -27,6 +25,16 @@ public class BevyTicket {
 
     public void setId(final Integer id) {
         this.id = id;
+    }
+
+    @DynamoDbSecondaryPartitionKey(indexNames = "TicketId")
+    @DynamoDbAttribute("ticket_id")
+    public String getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(final String ticketId) {
+        this.ticketId = ticketId;
     }
 
     @DynamoDbPartitionKey
