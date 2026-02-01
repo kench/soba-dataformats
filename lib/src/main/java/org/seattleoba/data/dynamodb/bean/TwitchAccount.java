@@ -5,6 +5,9 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 @DynamoDbBean
 public class TwitchAccount {
     private Integer id;
@@ -14,6 +17,11 @@ public class TwitchAccount {
     private String broadcasterType;
     private String description;
     private Long createdAt;
+    private Long ttl;
+
+    public TwitchAccount() {
+        ttl = Instant.now().plus(1, ChronoUnit.DAYS).getEpochSecond();
+    }
 
     @DynamoDbPartitionKey
     @DynamoDbAttribute("id")
@@ -78,5 +86,14 @@ public class TwitchAccount {
 
     public void setCreatedAt(final Long createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @DynamoDbAttribute("ttl")
+    public Long getTtl() {
+        return this.ttl;
+    }
+
+    public void setTtl(final Long ttl) {
+        this.ttl = ttl;
     }
 }
