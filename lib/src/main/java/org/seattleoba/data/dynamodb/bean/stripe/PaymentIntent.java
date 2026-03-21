@@ -8,7 +8,7 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecon
 @DynamoDbBean
 public class PaymentIntent {
     private String id;
-    private String chargeId;
+    private String latestChargeId;
     private String customerId;
     private String description;
 
@@ -23,13 +23,13 @@ public class PaymentIntent {
     }
 
     @DynamoDbSecondaryPartitionKey(indexNames = "Charge")
-    @DynamoDbAttribute("charge")
-    public String getChargeId() {
-        return chargeId;
+    @DynamoDbAttribute("latest_charge")
+    public String getLatestChargeId() {
+        return latestChargeId;
     }
 
-    public void setChargeId(final String chargeId) {
-        this.chargeId = chargeId;
+    public void setLatestChargeId(final String latestChargeId) {
+        this.latestChargeId = latestChargeId;
     }
 
     @DynamoDbSecondaryPartitionKey(indexNames = "Customer")
