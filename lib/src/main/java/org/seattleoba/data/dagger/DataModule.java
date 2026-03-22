@@ -11,7 +11,6 @@ import org.seattleoba.data.persistence.stripe.StripePaymentIntentStore;
 import software.amazon.awssdk.enhanced.dynamodb.*;
 import software.amazon.awssdk.enhanced.dynamodb.document.EnhancedDocument;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Module
@@ -56,16 +55,9 @@ public class DataModule {
 
     @Provides
     @Singleton
-    @Named("DynamoDb")
-    public ObjectMapper providesObjectMapperForDynamoDB() {
-        return new ObjectMapper();
-    }
-
-    @Provides
-    @Singleton
     public StripeBalanceTransactionStore providesStripeBalanceTransactionStore(
             final DynamoDbEnhancedClient dynamoDbEnhancedClient,
-            @Named("DynamoDB") final ObjectMapper objectMapper) {
+            final ObjectMapper objectMapper) {
         final TableSchema<EnhancedDocument> enhancedDocumentTableSchema = TableSchema.documentSchemaBuilder()
                 .addIndexPartitionKey(TableMetadata.primaryIndexName(), "id", AttributeValueType.S)
                 .addIndexPartitionKey("Source","source", AttributeValueType.S)
@@ -80,7 +72,7 @@ public class DataModule {
     @Singleton
     public StripePaymentIntentStore providesStripePaymentIntentStore(
             final DynamoDbEnhancedClient dynamoDbEnhancedClient,
-            @Named("DynamoDB") final ObjectMapper objectMapper) {
+            final ObjectMapper objectMapper) {
         final TableSchema<EnhancedDocument> enhancedDocumentTableSchema = TableSchema.documentSchemaBuilder()
                 .addIndexPartitionKey(TableMetadata.primaryIndexName(), "id", AttributeValueType.S)
                 .addIndexPartitionKey("Charge","latest_charge", AttributeValueType.S)
