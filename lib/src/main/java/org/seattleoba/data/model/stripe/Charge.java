@@ -10,7 +10,7 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record Charge(
         @JsonProperty("id") String id,
-        @JsonProperty("amount") Integer amount,
+        @JsonProperty("amount") Long amount,
         @JsonProperty("balance_transaction") String balanceTransaction,
         @JsonProperty("captured") Boolean captured,
         @JsonProperty("created") Long created,
