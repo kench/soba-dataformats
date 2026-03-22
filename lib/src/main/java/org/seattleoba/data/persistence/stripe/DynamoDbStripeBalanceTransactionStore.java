@@ -56,7 +56,7 @@ public class DynamoDbStripeBalanceTransactionStore implements StripeBalanceTrans
         } catch (final JsonProcessingException exception) {
             throw new IllegalArgumentException(exception);
         }
-        dynamoDbTable.updateItem(enhancedDocument);
+        dynamoDbTable.putItem(enhancedDocument);
     }
 
     private BalanceTransaction getBalanceTransaction(final EnhancedDocument enhancedDocument) {
