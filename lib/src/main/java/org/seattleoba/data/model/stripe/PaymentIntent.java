@@ -21,5 +21,5 @@ public record PaymentIntent(
         @JsonProperty("status") String status,
         @JsonProperty("created") Long created,
         @JsonProperty("application") String application,
-        @JsonProperty("application_fee_amount") String applicationFeeAmount) {
+        @JsonProperty("application_fee_amount") Long applicationFeeAmount) {
 }
