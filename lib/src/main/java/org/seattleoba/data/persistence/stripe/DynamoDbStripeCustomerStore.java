@@ -2,7 +2,7 @@ package org.seattleoba.data.persistence.stripe;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.seattleoba.data.model.stripe.PaymentIntent;
+import org.seattleoba.data.model.stripe.Customer;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.document.EnhancedDocument;
@@ -13,45 +13,45 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Optional;
 
-public class DynamoDbStripePaymentIntentStore implements StripePaymentIntentStore{
-    private static final String CHARGE_INDEX = "Charge";
-    private static final String DESCRIPTION_INDEX = "Description";
+public class DynamoDbStripeCustomerStore implements StripeCustomerStore {
+    private static final String EMAIL_INDEX = "Email";
+    private static final String NAME_INDEX = "Name";
 
     private final DynamoDbTable<EnhancedDocument> dynamoDbTable;
     private final ObjectMapper objectMapper;
 
     @Inject
-    public DynamoDbStripePaymentIntentStore(
-            @Named("StripePaymentIntents") final DynamoDbTable<EnhancedDocument> dynamoDbTable,
+    public DynamoDbStripeCustomerStore(
+            @Named("StripeCustomers") final DynamoDbTable<EnhancedDocument> dynamoDbTable,
             final ObjectMapper objectMapper) {
         this.dynamoDbTable = dynamoDbTable;
         this.objectMapper = objectMapper;
     }
 
     @Override
-    public PaymentIntent getPaymentIntentById(final String paymentIntentId) {
+    public Customer getCustomerById(final String customerId) {
         final EnhancedDocument enhancedDocument = dynamoDbTable.getItem(Key.builder()
-                .partitionValue(paymentIntentId)
+                .partitionValue(customerId)
                 .build());
-        return getPaymentIntent(enhancedDocument);
+        return getCustomer(enhancedDocument);
     }
 
     @Override
-    public PaymentIntent findPaymentIntentByDescription(final String description) {
-        return queryByIndex(DESCRIPTION_INDEX, description);
+    public Customer findCustomerByEmail(final String email) {
+        return queryByIndex(EMAIL_INDEX, email);
     }
 
     @Override
-    public PaymentIntent findPaymentIntentByLatestCharge(final String chargeId) {
-        return queryByIndex(CHARGE_INDEX, chargeId);
+    public Customer findCustomerByName(final String name) {
+        return queryByIndex(NAME_INDEX, name);
     }
 
     @Override
-    public void updatePaymentIntent(final PaymentIntent paymentIntent) {
+    public void updateCustomer(final Customer customer) {
         final EnhancedDocument enhancedDocument;
         try {
             enhancedDocument = EnhancedDocument.builder()
-                    .json(objectMapper.writeValueAsString(paymentIntent))
+                    .json(objectMapper.writeValueAsString(customer))
                     .build();
         } catch (final JsonProcessingException exception) {
             throw new IllegalArgumentException(exception);
@@ -59,19 +59,19 @@ public class DynamoDbStripePaymentIntentStore implements StripePaymentIntentStor
         dynamoDbTable.putItem(enhancedDocument);
     }
 
-    private PaymentIntent queryByIndex(final String indexName, final String partitionValue) {
+    private Customer queryByIndex(final String indexName, final String partitionValue) {
         final QueryConditional queryConditional = QueryConditional.keyEqualTo(Key.builder()
                 .partitionValue(partitionValue)
                 .build());
         final Optional<Page<EnhancedDocument>> page =
                 dynamoDbTable.index(indexName)
                         .query(q -> q.queryConditional(queryConditional)).stream().findAny();
-        return page.map(enhancedDocumentPage -> getPaymentIntent(enhancedDocumentPage.items().getFirst())).orElse(null);
+        return page.map(enhancedDocumentPage -> getCustomer(enhancedDocumentPage.items().getFirst())).orElse(null);
     }
 
-    private PaymentIntent getPaymentIntent(final EnhancedDocument enhancedDocument) {
+    private Customer getCustomer(final EnhancedDocument enhancedDocument) {
         try {
-            return objectMapper.readValue(enhancedDocument.toJson(), PaymentIntent.class);
+            return objectMapper.readValue(enhancedDocument.toJson(), Customer.class);
         } catch (final JsonProcessingException exception) {
             throw new IllegalStateException(exception);
         }
