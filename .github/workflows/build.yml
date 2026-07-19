@@ -34,6 +34,13 @@ jobs:
           path: /tmp/soba-test/sample.db
       - name: Run Gradle build
         run: './gradlew build -i'
+      - name: Delete old package versions
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: 'org.seattleoba.soba-dataformats'
+          package-type: 'maven'
+          min-versions-to-keep: 0
+          delete-only-pre-release-versions: "false"
       - name: Publish package
         run: './gradlew publish'
         env:
