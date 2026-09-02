@@ -1,6 +1,7 @@
 package org.seattleoba.data.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * Event registration entry.
@@ -14,6 +15,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @param broadcasterType Twitch broadcaster type
  * @param userType Twitch user account type
  */
+@JsonPropertyOrder({
+        "Order number",
+        "Ticket number",
+        "Paid by (name)",
+        "User name",
+        "Ticket title",
+        "Broadcaster type",
+        "User type",
+        "Paid date (UTC)"
+})
 public record EventRegistration(
         @JsonProperty("Ticket number") String ticketNumber,
         @JsonProperty("Order number") String orderNumber,
