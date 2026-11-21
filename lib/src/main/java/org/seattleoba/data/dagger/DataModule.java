@@ -15,9 +15,10 @@ public class DataModule {
     private static final String BEVY_TICKET_TABLE_NAME = "BevyTickets";
     private static final String EVENT_REGISTRATION_TABLE_NAME = "TwitchAccountsBevyTickets";
     private static final String STRIPE_BALANCE_TRANSACTIONS_TABLE_NAME = "StripeBalanceTransactions";
+    private static final String STRIPE_CHARGES_TABLE_NAME = "StripeCharges";
     private static final String STRIPE_CUSTOMERS_TABLE_NAME = "StripeCustomers";
     private static final String STRIPE_PAYMENT_INTENTS_TABLE_NAME = "StripePaymentIntents";
-    private static final String STRIPE_REFUNDS_TABLE_NAME = "StripePaymentRefunds";
+    private static final String STRIPE_REFUNDS_TABLE_NAME = "StripeRefunds";
     private static final String TWITCH_ACCOUNT_TABLE_NAME = "TwitchAccounts";
     private static final String TWITCH_TEAM_TABLE_NAME = "TwitchTeams";
     private static final String TWITCH_TEAM_MEMBERSHIP_TABLE_NAME = "TwitchTeamMemberships";
@@ -79,7 +80,7 @@ public class DataModule {
                 .attributeConverterProviders(AttributeConverterProvider.defaultProvider())
                 .build();
         final DynamoDbTable<EnhancedDocument> enhancedDocumentTable =
-                dynamoDbEnhancedClient.table(STRIPE_CUSTOMERS_TABLE_NAME, enhancedDocumentTableSchema);
+                dynamoDbEnhancedClient.table(STRIPE_CHARGES_TABLE_NAME, enhancedDocumentTableSchema);
         return new DynamoDbStripeChargeStore(enhancedDocumentTable, objectMapper);
     }
 
