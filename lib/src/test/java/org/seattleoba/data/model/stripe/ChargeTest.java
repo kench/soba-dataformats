@@ -1,29 +1,30 @@
 package org.seattleoba.data.model.stripe;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
+class ChargeTest {
+  private static final String CHARGE_JSON_FILE_NAME = "/stripe/charge.json";
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
-public class ChargeTest {
-    private final String CHARGE_JSON_FILE_NAME = "/stripe/charge.json";
+  private Charge charge;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+  @BeforeEach
+  void setup() throws IOException {
+    charge =
+        objectMapper.readValue(
+            ChargeTest.class.getResourceAsStream(CHARGE_JSON_FILE_NAME), Charge.class);
+  }
 
-    private Charge charge;
-
-    @BeforeEach
-    public void setup() throws IOException {
-        charge = objectMapper.readValue(ChargeTest.class.getResourceAsStream(CHARGE_JSON_FILE_NAME), Charge.class);
-    }
-
-    @Test
-    public void parsesCharge() {
-        assertEquals("ch_3MmlLrLkdIwHu7ix0snN0B15", charge.id());
-        assertEquals("cus_NffrFeUfNV2Hib", charge.customer());
-        assertEquals("pi_3MtwBwLkdIwHu7ix28a3tqPa", charge.paymentIntent());
-    }
+  @Test
+  void parsesCharge() {
+    assertEquals("ch_3MmlLrLkdIwHu7ix0snN0B15", charge.id());
+    assertEquals("cus_NffrFeUfNV2Hib", charge.customer());
+    assertEquals("pi_3MtwBwLkdIwHu7ix28a3tqPa", charge.paymentIntent());
+  }
 }

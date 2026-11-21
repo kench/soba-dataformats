@@ -1,71 +1,76 @@
 package org.seattleoba.data.persistence;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Objects;
+import javax.inject.Inject;
 import org.seattleoba.data.jdbi.BevyTicketDao;
 import org.seattleoba.data.model.BevyTicket;
 import org.seattleoba.data.util.BevyDateUtil;
 import org.seattleoba.data.util.BevyTicketNumberUtil;
 
-import javax.inject.Inject;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Objects;
-
+/** {@link BevyTicketStore} backed by the SQLite database through JDBI. */
 public class JdbiBevyTicketStore implements BevyTicketStore {
-    private final BevyTicketDao bevyTicketDao;
+  private final BevyTicketDao bevyTicketDao;
 
-    @Inject
-    public JdbiBevyTicketStore(final BevyTicketDao bevyTicketDao) {
-        this.bevyTicketDao = bevyTicketDao;
+  /**
+   * Creates a store that reads and writes through the given DAO.
+   *
+   * @param bevyTicketDao DAO for the bevy_tickets table
+   */
+  @Inject
+  public JdbiBevyTicketStore(final BevyTicketDao bevyTicketDao) {
+    this.bevyTicketDao = bevyTicketDao;
+  }
+
+  @Override
+  public BevyTicket getTicketByNumber(final Integer eventId, final Integer ticketNumber) {
+    return bevyTicketDao.findByTicketNumber(ticketNumber).getFirst();
+  }
+
+  @Override
+  public BevyTicket getTicketByTwitchId(final Integer eventId, final Integer twitchId) {
+    return bevyTicketDao.findByEventAndTwitchId(eventId, twitchId).getFirst();
+  }
+
+  @Override
+  public List<BevyTicket> getTicketsForTwitchId(final Integer twitchId) {
+    return bevyTicketDao.getTicketsByTwitchId(twitchId);
+  }
+
+  @Override
+  public void insertBevyTicket(final Integer eventId, final BevyTicket bevyTicket) {
+    final Long purchaseDate;
+    if (Objects.nonNull(bevyTicket.purchaseDate())) {
+      purchaseDate = BevyDateUtil.toUnixEpochInSeconds(bevyTicket.purchaseDate());
+    } else {
+      purchaseDate = null;
     }
 
-    @Override
-    public BevyTicket getTicketByNumber(final Integer eventId, final Integer ticketNumber) {
-        return bevyTicketDao.findByTicketNumber(ticketNumber).getFirst();
+    final Long checkInDate;
+    if (Objects.nonNull(bevyTicket.checkInDate())) {
+      checkInDate = BevyDateUtil.toUnixEpochInSeconds(bevyTicket.checkInDate());
+    } else {
+      checkInDate = null;
     }
 
-    @Override
-    public BevyTicket getTicketByTwitchId(final Integer eventId, final Integer twitchId) {
-        return bevyTicketDao.findByEventAndTwitchId(eventId, twitchId).getFirst();
+    final BigDecimal price;
+    if (Objects.nonNull(bevyTicket.price())) {
+      price = new BigDecimal(bevyTicket.price());
+    } else {
+      price = null;
     }
 
-    @Override
-    public List<BevyTicket> getTicketsForTwitchId(final Integer twitchId) {
-        return bevyTicketDao.getTicketsByTwitchId(twitchId);
-    }
-
-    @Override
-    public void insertBevyTicket(final Integer eventId, final BevyTicket bevyTicket) {
-        final Long purchaseDate;
-        if (Objects.nonNull(bevyTicket.purchaseDate())) {
-            purchaseDate = BevyDateUtil.toUnixEpochInSeconds(bevyTicket.purchaseDate());
-        } else {
-            purchaseDate = null;
-        }
-
-        final Long checkInDate;
-        if (Objects.nonNull(bevyTicket.checkInDate())) {
-            checkInDate = BevyDateUtil.toUnixEpochInSeconds(bevyTicket.checkInDate());
-        } else {
-            checkInDate = null;
-        }
-
-        final BigDecimal price;
-        if (Objects.nonNull(bevyTicket.price())) {
-            price = new BigDecimal(bevyTicket.price());
-        } else {
-            price = null;
-        }
-
-        bevyTicketDao.insert(
-                eventId,
-                bevyTicket.orderNumber(),
-                BevyTicketNumberUtil.toInteger(bevyTicket.ticketNumber()),
-                bevyTicket.ticketNumber(),
-                bevyTicket.purchaserName(),
-                bevyTicket.ticketType(),
-                purchaseDate,
-                checkInDate,
-                bevyTicket.accessCode(),
-                price);
-    }
+    bevyTicketDao.insert(
+        eventId,
+        bevyTicket.orderNumber(),
+        BevyTicketNumberUtil.toInteger(bevyTicket.ticketNumber()),
+        bevyTicket.ticketNumber(),
+        bevyTicket.purchaserName(),
+        bevyTicket.ticketType(),
+        purchaseDate,
+        checkInDate,
+        bevyTicket.accessCode(),
+        price);
+  }
 }

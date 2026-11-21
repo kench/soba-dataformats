@@ -1,112 +1,116 @@
 package org.seattleoba.data.dynamodb.bean;
 
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
-
 import java.math.BigDecimal;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
 
+/** DynamoDB item for the BevyTickets table, keyed by Bevy event ID and numeric ticket ID. */
 @DynamoDbBean
 public class BevyTicket {
-    private Integer id;
-    private String ticketId;
-    private Integer eventId;
-    private String orderId;
-    private String purchaserName;
-    private String ticketType;
-    private Long purchaseDate;
-    private Long checkInDate;
-    private String accessCode;
-    private BigDecimal price;
+  private Integer id;
+  private String ticketId;
+  private Integer eventId;
+  private String orderId;
+  private String purchaserName;
+  private String ticketType;
+  private Long purchaseDate;
+  private Long checkInDate;
+  private String accessCode;
+  private BigDecimal price;
 
-    @DynamoDbSortKey
-    @DynamoDbAttribute("id")
-    public Integer getId() {
-        return id;
-    }
+  @DynamoDbSortKey
+  @DynamoDbAttribute("id")
+  public Integer getId() {
+    return id;
+  }
 
-    public void setId(final Integer id) {
-        this.id = id;
-    }
+  public void setId(final Integer id) {
+    this.id = id;
+  }
 
-    @DynamoDbSecondaryPartitionKey(indexNames = "TicketId")
-    @DynamoDbAttribute("ticket_id")
-    public String getTicketId() {
-        return ticketId;
-    }
+  @DynamoDbSecondaryPartitionKey(indexNames = "TicketId")
+  @DynamoDbAttribute("ticket_id")
+  public String getTicketId() {
+    return ticketId;
+  }
 
-    public void setTicketId(final String ticketId) {
-        this.ticketId = ticketId;
-    }
+  public void setTicketId(final String ticketId) {
+    this.ticketId = ticketId;
+  }
 
-    @DynamoDbPartitionKey
-    @DynamoDbAttribute(value = "event_id")
-    public Integer getEventId() {
-        return eventId;
-    }
+  @DynamoDbPartitionKey
+  @DynamoDbAttribute(value = "event_id")
+  public Integer getEventId() {
+    return eventId;
+  }
 
-    public void setEventId(final Integer eventId) {
-        this.eventId = eventId;
-    }
+  public void setEventId(final Integer eventId) {
+    this.eventId = eventId;
+  }
 
-    @DynamoDbAttribute(value = "order_id")
-    public String getOrderId() {
-        return orderId;
-    }
+  @DynamoDbAttribute(value = "order_id")
+  public String getOrderId() {
+    return orderId;
+  }
 
-    public void setOrderId(final String orderId) {
-        this.orderId = orderId;
-    }
+  public void setOrderId(final String orderId) {
+    this.orderId = orderId;
+  }
 
-    @DynamoDbAttribute(value = "purchaser_name")
-    public String getPurchaserName() {
-        return purchaserName;
-    }
+  @DynamoDbAttribute(value = "purchaser_name")
+  public String getPurchaserName() {
+    return purchaserName;
+  }
 
-    public void setPurchaserName(final String purchaserName) {
-        this.purchaserName = purchaserName;
-    }
+  public void setPurchaserName(final String purchaserName) {
+    this.purchaserName = purchaserName;
+  }
 
-    @DynamoDbAttribute(value = "ticket_type")
-    public String getTicketType() {
-        return ticketType;
-    }
+  @DynamoDbAttribute(value = "ticket_type")
+  public String getTicketType() {
+    return ticketType;
+  }
 
-    public void setTicketType(final String ticketType) {
-        this.ticketType = ticketType;
-    }
+  public void setTicketType(final String ticketType) {
+    this.ticketType = ticketType;
+  }
 
-    @DynamoDbAttribute(value = "purchase_date")
-    public Long getPurchaseDate() {
-        return purchaseDate;
-    }
+  @DynamoDbAttribute(value = "purchase_date")
+  public Long getPurchaseDate() {
+    return purchaseDate;
+  }
 
-    public void setPurchaseDate(final Long purchaseDate) {
-        this.purchaseDate = purchaseDate;
-    }
+  public void setPurchaseDate(final Long purchaseDate) {
+    this.purchaseDate = purchaseDate;
+  }
 
-    @DynamoDbAttribute(value = "check_in_date")
-    public Long getCheckInDate() {
-        return checkInDate;
-    }
+  @DynamoDbAttribute(value = "check_in_date")
+  public Long getCheckInDate() {
+    return checkInDate;
+  }
 
-    public void setCheckInDate(final Long checkInDate) {
-        this.checkInDate = checkInDate;
-    }
+  public void setCheckInDate(final Long checkInDate) {
+    this.checkInDate = checkInDate;
+  }
 
-    @DynamoDbAttribute(value = "access_code")
-    public String getAccessCode() {
-        return accessCode;
-    }
+  @DynamoDbAttribute(value = "access_code")
+  public String getAccessCode() {
+    return accessCode;
+  }
 
-    public void setAccessCode(final String accessCode) {
-        this.accessCode = accessCode;
-    }
+  public void setAccessCode(final String accessCode) {
+    this.accessCode = accessCode;
+  }
 
-    @DynamoDbAttribute(value = "price")
-    public BigDecimal getPrice() {
-        return price;
-    }
+  @DynamoDbAttribute(value = "price")
+  public BigDecimal getPrice() {
+    return price;
+  }
 
-    public void setPrice(final BigDecimal price) {
-        this.price = price;
-    }
+  public void setPrice(final BigDecimal price) {
+    this.price = price;
+  }
 }

@@ -5,39 +5,43 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
 
+/**
+ * Key schema of the StripeCustomers table. Items are stored as documents; this bean only describes
+ * the primary key and the Email and Name indexes.
+ */
 @DynamoDbBean
 public class Customer {
-    private String id;
-    private String email;
-    private String name;
+  private String id;
+  private String email;
+  private String name;
 
-    @DynamoDbPartitionKey
-    @DynamoDbAttribute("id")
-    public String getId() {
-        return id;
-    }
+  @DynamoDbPartitionKey
+  @DynamoDbAttribute("id")
+  public String getId() {
+    return id;
+  }
 
-    public void setId(final String id) {
-        this.id = id;
-    }
+  public void setId(final String id) {
+    this.id = id;
+  }
 
-    @DynamoDbSecondaryPartitionKey(indexNames = "Email")
-    @DynamoDbAttribute("email")
-    public String getEmail() {
-        return email;
-    }
+  @DynamoDbSecondaryPartitionKey(indexNames = "Email")
+  @DynamoDbAttribute("email")
+  public String getEmail() {
+    return email;
+  }
 
-    public void setEmail(final String email) {
-        this.email = email;
-    }
+  public void setEmail(final String email) {
+    this.email = email;
+  }
 
-    @DynamoDbSecondaryPartitionKey(indexNames = "Name")
-    @DynamoDbAttribute("name")
-    public String getName() {
-        return name;
-    }
+  @DynamoDbSecondaryPartitionKey(indexNames = "Name")
+  @DynamoDbAttribute("name")
+  public String getName() {
+    return name;
+  }
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+  public void setName(final String name) {
+    this.name = name;
+  }
 }

@@ -16,22 +16,21 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * @param userType Twitch user account type
  */
 @JsonPropertyOrder({
-        "Order number",
-        "Ticket number",
-        "Paid by (name)",
-        "User name",
-        "Ticket title",
-        "Broadcaster type",
-        "User type",
-        "Paid date (UTC)"
+  "Order number",
+  "Ticket number",
+  "Paid by (name)",
+  "User name",
+  "Ticket title",
+  "Broadcaster type",
+  "User type",
+  "Paid date (UTC)"
 })
 public record EventRegistration(
-        @JsonProperty("Ticket number") String ticketNumber,
-        @JsonProperty("Order number") String orderNumber,
-        @JsonProperty("Ticket title") String ticketType,
-        @JsonProperty("Paid date (UTC)") String purchaseDate,
-        @JsonProperty("Paid by (name)") String purchaserName,
-        @JsonProperty("User name") String userName,
-        @JsonProperty("Broadcaster type") String broadcasterType,
-        @JsonProperty("User type") String userType) {
-}
+    @JsonProperty("Ticket number") String ticketNumber,
+    @JsonProperty("Order number") String orderNumber,
+    @JsonProperty("Ticket title") String ticketType,
+    @JsonProperty("Paid date (UTC)") String purchaseDate,
+    @JsonProperty("Paid by (name)") String purchaserName,
+    @JsonProperty("User name") String userName,
+    @JsonProperty("Broadcaster type") String broadcasterType,
+    @JsonProperty("User type") String userType) {}

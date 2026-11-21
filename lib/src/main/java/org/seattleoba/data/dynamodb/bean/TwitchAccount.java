@@ -1,99 +1,100 @@
 package org.seattleoba.data.dynamodb.bean;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-
+/** DynamoDB item for the TwitchAccounts table, keyed by Twitch user ID. */
 @DynamoDbBean
 public class TwitchAccount {
-    private Integer id;
-    private String userName;
-    private String displayName;
-    private String userType;
-    private String broadcasterType;
-    private String description;
-    private Long createdAt;
-    private Long ttl;
+  private Integer id;
+  private String userName;
+  private String displayName;
+  private String userType;
+  private String broadcasterType;
+  private String description;
+  private Long createdAt;
+  private Long ttl;
 
-    public TwitchAccount() {
-        ttl = Instant.now().plus(1, ChronoUnit.DAYS).getEpochSecond();
-    }
+  /** Creates an empty account whose TTL expires one day from now. */
+  public TwitchAccount() {
+    ttl = Instant.now().plus(1, ChronoUnit.DAYS).getEpochSecond();
+  }
 
-    @DynamoDbPartitionKey
-    @DynamoDbAttribute("id")
-    public Integer getId() {
-        return id;
-    }
+  @DynamoDbPartitionKey
+  @DynamoDbAttribute("id")
+  public Integer getId() {
+    return id;
+  }
 
-    public void setId(final Integer id) {
-        this.id = id;
-    }
+  public void setId(final Integer id) {
+    this.id = id;
+  }
 
-    @DynamoDbSecondaryPartitionKey(indexNames = "UserName")
-    @DynamoDbAttribute("user_name")
-    public String getUserName() {
-        return this.userName;
-    }
+  @DynamoDbSecondaryPartitionKey(indexNames = "UserName")
+  @DynamoDbAttribute("user_name")
+  public String getUserName() {
+    return this.userName;
+  }
 
-    public void setUserName(final String userName) {
-        this.userName = userName;
-    }
+  public void setUserName(final String userName) {
+    this.userName = userName;
+  }
 
-    @DynamoDbAttribute("display_name")
-    public String getDisplayName() {
-        return this.displayName;
-    }
+  @DynamoDbAttribute("display_name")
+  public String getDisplayName() {
+    return this.displayName;
+  }
 
-    public void setDisplayName(final String displayName) {
-        this.displayName = displayName;
-    }
+  public void setDisplayName(final String displayName) {
+    this.displayName = displayName;
+  }
 
-    @DynamoDbAttribute("user_type")
-    public String getUserType() {
-        return this.userType;
-    }
+  @DynamoDbAttribute("user_type")
+  public String getUserType() {
+    return this.userType;
+  }
 
-    public void setUserType(final String userType) {
-        this.userType = userType;
-    }
+  public void setUserType(final String userType) {
+    this.userType = userType;
+  }
 
-    @DynamoDbAttribute("broadcaster_type")
-    public String getBroadcasterType() {
-        return this.broadcasterType;
-    }
+  @DynamoDbAttribute("broadcaster_type")
+  public String getBroadcasterType() {
+    return this.broadcasterType;
+  }
 
-    public void setBroadcasterType(final String broadcasterType) {
-        this.broadcasterType = broadcasterType;
-    }
+  public void setBroadcasterType(final String broadcasterType) {
+    this.broadcasterType = broadcasterType;
+  }
 
-    @DynamoDbAttribute("description")
-    public String getDescription() {
-        return this.description;
-    }
+  @DynamoDbAttribute("description")
+  public String getDescription() {
+    return this.description;
+  }
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+  public void setDescription(final String description) {
+    this.description = description;
+  }
 
-    @DynamoDbAttribute("created_at")
-    public Long getCreatedAt() {
-        return this.createdAt;
-    }
+  @DynamoDbAttribute("created_at")
+  public Long getCreatedAt() {
+    return this.createdAt;
+  }
 
-    public void setCreatedAt(final Long createdAt) {
-        this.createdAt = createdAt;
-    }
+  public void setCreatedAt(final Long createdAt) {
+    this.createdAt = createdAt;
+  }
 
-    @DynamoDbAttribute("ttl")
-    public Long getTtl() {
-        return this.ttl;
-    }
+  @DynamoDbAttribute("ttl")
+  public Long getTtl() {
+    return this.ttl;
+  }
 
-    public void setTtl(final Long ttl) {
-        this.ttl = ttl;
-    }
+  public void setTtl(final Long ttl) {
+    this.ttl = ttl;
+  }
 }
