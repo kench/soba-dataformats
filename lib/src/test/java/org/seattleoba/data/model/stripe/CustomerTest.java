@@ -1,29 +1,30 @@
 package org.seattleoba.data.model.stripe;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
+class CustomerTest {
+  private static final String CUSTOMER_JSON_FILE_NAME = "/stripe/customer.json";
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
-public class CustomerTest {
-    private final String CUSTOMER_JSON_FILE_NAME = "/stripe/customer.json";
+  private Customer customer;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+  @BeforeEach
+  void setup() throws IOException {
+    customer =
+        objectMapper.readValue(
+            CustomerTest.class.getResourceAsStream(CUSTOMER_JSON_FILE_NAME), Customer.class);
+  }
 
-    private Customer customer;
-
-    @BeforeEach
-    public void setup() throws IOException {
-        customer = objectMapper.readValue(CustomerTest.class.getResourceAsStream(CUSTOMER_JSON_FILE_NAME), Customer.class);
-    }
-
-    @Test
-    public void parsesCustomer() {
-        assertEquals("cus_NffrFeUfNV2Hib", customer.id());
-        assertEquals("soba@example.com", customer.email());
-        assertEquals("SeattleOBA", customer.name());
-    }
+  @Test
+  void parsesCustomer() {
+    assertEquals("cus_NffrFeUfNV2Hib", customer.id());
+    assertEquals("soba@example.com", customer.email());
+    assertEquals("SeattleOBA", customer.name());
+  }
 }

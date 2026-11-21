@@ -5,50 +5,54 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
 
+/**
+ * Key schema of the StripePaymentIntents table. Items are stored as documents; this bean only
+ * describes the primary key and the Charge, Customer and Description indexes.
+ */
 @DynamoDbBean
 public class PaymentIntent {
-    private String id;
-    private String latestChargeId;
-    private String customerId;
-    private String description;
+  private String id;
+  private String latestChargeId;
+  private String customerId;
+  private String description;
 
-    @DynamoDbPartitionKey
-    @DynamoDbAttribute("id")
-    public String getId() {
-        return id;
-    }
+  @DynamoDbPartitionKey
+  @DynamoDbAttribute("id")
+  public String getId() {
+    return id;
+  }
 
-    public void setId(final String id) {
-        this.id = id;
-    }
+  public void setId(final String id) {
+    this.id = id;
+  }
 
-    @DynamoDbSecondaryPartitionKey(indexNames = "Charge")
-    @DynamoDbAttribute("latest_charge")
-    public String getLatestChargeId() {
-        return latestChargeId;
-    }
+  @DynamoDbSecondaryPartitionKey(indexNames = "Charge")
+  @DynamoDbAttribute("latest_charge")
+  public String getLatestChargeId() {
+    return latestChargeId;
+  }
 
-    public void setLatestChargeId(final String latestChargeId) {
-        this.latestChargeId = latestChargeId;
-    }
+  public void setLatestChargeId(final String latestChargeId) {
+    this.latestChargeId = latestChargeId;
+  }
 
-    @DynamoDbSecondaryPartitionKey(indexNames = "Customer")
-    @DynamoDbAttribute("customer")
-    public String getCustomerId() {
-        return customerId;
-    }
+  @DynamoDbSecondaryPartitionKey(indexNames = "Customer")
+  @DynamoDbAttribute("customer")
+  public String getCustomerId() {
+    return customerId;
+  }
 
-    public void setCustomerId(final String customerId) {
-        this.customerId = customerId;
-    }
+  public void setCustomerId(final String customerId) {
+    this.customerId = customerId;
+  }
 
-    @DynamoDbSecondaryPartitionKey(indexNames = "Description")
-    @DynamoDbAttribute("description")
-    public String getDescription() {
-        return description;
-    }
+  @DynamoDbSecondaryPartitionKey(indexNames = "Description")
+  @DynamoDbAttribute("description")
+  public String getDescription() {
+    return description;
+  }
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+  public void setDescription(final String description) {
+    this.description = description;
+  }
 }

@@ -15,12 +15,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @param price Price paid for ticket.
  */
 public record BevyTicket(
-        @JsonProperty("Ticket number") String ticketNumber,
-        @JsonProperty("Order number") String orderNumber,
-        @JsonProperty("Paid by (name)") String purchaserName,
-        @JsonProperty("Ticket title") String ticketType,
-        @JsonProperty("Paid date (UTC)") String purchaseDate,
-        @JsonProperty("Checkin Date (UTC)") String checkInDate,
-        @JsonProperty("Access code") String accessCode,
-        @JsonProperty("Price") String price) {
-}
+    @JsonProperty("Ticket number") String ticketNumber,
+    @JsonProperty("Order number") String orderNumber,
+    @JsonProperty("Paid by (name)") String purchaserName,
+    @JsonProperty("Ticket title") String ticketType,
+    @JsonProperty("Paid date (UTC)") String purchaseDate,
+    @JsonProperty("Checkin Date (UTC)") String checkInDate,
+    @JsonProperty("Access code") String accessCode,
+    @JsonProperty("Price") String price) {}

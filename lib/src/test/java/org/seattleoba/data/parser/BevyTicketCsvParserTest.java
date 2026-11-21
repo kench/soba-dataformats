@@ -1,49 +1,49 @@
 package org.seattleoba.data.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import java.io.InputStream;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seattleoba.data.model.BevyTicket;
 
-import java.io.InputStream;
-import java.util.List;
+class BevyTicketCsvParserTest {
+  private static final String TICKET_CSV_FILE_NAME = "/tickets.csv";
+  private static final String TICKET_WITH_ACCESS_CODE_CSV_FILE_NAME =
+      "/tickets-with-access-code.csv";
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+  private BevyTicketCsvParser bevyTicketCsvParser;
 
-public class BevyTicketCsvParserTest {
-    private final String TICKET_CSV_FILE_NAME = "/tickets.csv";
-    private final String TICKET_WITH_ACCESS_CODE_CSV_FILE_NAME = "/tickets-with-access-code.csv";
+  @BeforeEach
+  void setup() {
+    bevyTicketCsvParser = new BevyTicketCsvParser();
+  }
 
-    private BevyTicketCsvParser bevyTicketCsvParser;
+  @Test
+  void parsesCsvFile() {
+    final InputStream inputStream =
+        BevyTicketCsvParserTest.class.getResourceAsStream(TICKET_CSV_FILE_NAME);
+    final List<BevyTicket> tickets = bevyTicketCsvParser.parseCsvFile(inputStream);
 
-    @BeforeEach
-    public void setup() {
-        bevyTicketCsvParser = new BevyTicketCsvParser();
-    }
+    assertFalse(tickets.isEmpty());
+    assertEquals(1, tickets.size());
+    assertEquals("TTE25065088", tickets.getFirst().orderNumber());
+    assertEquals("TTA25062005", tickets.getFirst().ticketNumber());
+    assertEquals("Kenley", tickets.getFirst().purchaserName());
+  }
 
-    @Test
-    public void parsesCsvFile() {
-        final InputStream inputStream = BevyTicketCsvParserTest.class
-                .getResourceAsStream(TICKET_CSV_FILE_NAME);
-        final List<BevyTicket> tickets = bevyTicketCsvParser.parseCsvFile(inputStream);
+  @Test
+  void parsesCsvFileWithAccessCode() {
+    final InputStream inputStream =
+        BevyTicketCsvParserTest.class.getResourceAsStream(TICKET_WITH_ACCESS_CODE_CSV_FILE_NAME);
+    final List<BevyTicket> tickets = bevyTicketCsvParser.parseCsvFile(inputStream);
 
-        assertFalse(tickets.isEmpty());
-        assertEquals(1, tickets.size());
-        assertEquals("TTE25065088", tickets.getFirst().orderNumber());
-        assertEquals("TTA25062005", tickets.getFirst().ticketNumber());
-        assertEquals("Kenley", tickets.getFirst().purchaserName());
-    }
-
-    @Test
-    public void parsesCsvFileWithAccessCode() {
-        final InputStream inputStream = BevyTicketCsvParserTest.class
-                .getResourceAsStream(TICKET_WITH_ACCESS_CODE_CSV_FILE_NAME);
-        final List<BevyTicket> tickets = bevyTicketCsvParser.parseCsvFile(inputStream);
-
-        assertFalse(tickets.isEmpty());
-        assertEquals(1, tickets.size());
-        assertEquals("TTE25060033", tickets.getFirst().orderNumber());
-        assertEquals("TTA25057051", tickets.getFirst().ticketNumber());
-        assertEquals("Kenley", tickets.getFirst().purchaserName());
-    }
+    assertFalse(tickets.isEmpty());
+    assertEquals(1, tickets.size());
+    assertEquals("TTE25060033", tickets.getFirst().orderNumber());
+    assertEquals("TTA25057051", tickets.getFirst().ticketNumber());
+    assertEquals("Kenley", tickets.getFirst().purchaserName());
+  }
 }

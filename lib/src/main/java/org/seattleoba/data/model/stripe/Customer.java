@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/** Subset of a Stripe Customer object, as returned by the Stripe API and stored in DynamoDB. */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record Customer(
-        @JsonProperty("id") String id,
-        @JsonProperty("email") String email,
-        @JsonProperty("name") String name) {
-}
+    @JsonProperty("id") String id,
+    @JsonProperty("email") String email,
+    @JsonProperty("name") String name) {}

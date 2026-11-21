@@ -11,6 +11,10 @@ plugins {
     // Use Flyway for database migrations
     id("org.flywaydb.flyway") version "11.19.1"
     id("maven-publish")
+    // Coverage, formatting and lint (Google Java Style)
+    jacoco
+    checkstyle
+    id("com.diffplug.spotless") version "8.12.0"
 }
 
 repositories {
@@ -18,11 +22,17 @@ repositories {
     mavenCentral()
 }
 
+val mockitoAgent = configurations.create("mockitoAgent")
+
 dependencies {
     // Use JUnit Jupiter for testing.
+    testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
-
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    // Mockito, loaded as a Java agent by the test task
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
+    mockitoAgent(libs.mockito.core) { isTransitive = false }
 
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api(libs.commons.math3)
@@ -53,13 +63,69 @@ dependencies {
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+    // Load Mockito as an agent instead of self-attaching (required on JDK 21+).
+    jvmArgs("-javaagent:${mockitoAgent.asPath}")
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+jacoco {
+    toolVersion = libs.versions.jacoco.get()
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+// Build fails if line coverage drops below 90%.
+tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.test)
+    violationRules {
+        rule {
+            limit {
+                counter = "LINE"
+                value = "COVEREDRATIO"
+                minimum = "0.90".toBigDecimal()
+            }
+        }
+    }
+}
+
+tasks.check {
+    dependsOn(tasks.jacocoTestCoverageVerification)
+}
+
+// google-java-format, checked by spotlessCheck (part of `check`). Run `./gradlew spotlessApply` to fix.
+spotless {
+    java {
+        googleJavaFormat(libs.versions.google.java.format.get()).reflowLongStrings()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
+// Checkstyle with Google's google_checks.xml (bundled with Checkstyle). Any warning fails the build.
+checkstyle {
+    toolVersion = libs.versions.checkstyle.get()
+    config = resources.text.fromString(
+        resources.text.fromArchiveEntry(
+            configurations.checkstyle.get().filter { it.name.startsWith("checkstyle-") },
+            "google_checks.xml"
+        ).asString()
+    )
+    maxWarnings = 0
+    isIgnoreFailures = false
 }
 
 flyway {
@@ -81,7 +147,7 @@ publishing {
         register<MavenPublication>("gpr") {
             groupId = "org.seattleoba"
             artifactId = "soba-dataformats"
-            version = "1.1"
+            version = "1.2"
 
             from(components["java"])
         }
