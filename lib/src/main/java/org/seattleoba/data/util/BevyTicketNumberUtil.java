@@ -15,7 +15,7 @@ public final class BevyTicketNumberUtil {
    * @return raw ticket number
    */
   public static int toInteger(final String ticketNumber) {
-    // Bevy ticket QR codes have the format: (768:62005)
+    // Bevy ticket QR codes have the format: 768:62005
     // 768 is the event ID in Bevy and 62005 is the last 5 digits of the ticket ID.
     if (ticketNumber.startsWith(BEVY_TICKET_PREFIX)) {
       return Integer.parseInt(ticketNumber.substring(6));

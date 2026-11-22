@@ -147,7 +147,7 @@ publishing {
         register<MavenPublication>("gpr") {
             groupId = "org.seattleoba"
             artifactId = "soba-dataformats"
-            version = "1.2"
+            version = "1.3"
 
             from(components["java"])
         }

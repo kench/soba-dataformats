@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
+import org.seattleoba.data.dynamodb.bean.BarcodeScan;
 import org.seattleoba.data.dynamodb.bean.BevyTicket;
 import org.seattleoba.data.dynamodb.bean.EventRegistration;
 import org.seattleoba.data.dynamodb.bean.TwitchAccount;
@@ -30,6 +31,7 @@ import software.amazon.awssdk.enhanced.dynamodb.document.EnhancedDocument;
 /** Dagger module that provides the SOBA DynamoDB tables and Stripe stores. */
 @Module
 public class DataModule {
+  private static final String BARCODE_SCAN_TABLE_NAME = "BarcodeScans";
   private static final String BEVY_TICKET_TABLE_NAME = "BevyTickets";
   private static final String EVENT_REGISTRATION_TABLE_NAME = "TwitchAccountsBevyTickets";
   private static final String STRIPE_BALANCE_TRANSACTIONS_TABLE_NAME = "StripeBalanceTransactions";
@@ -40,6 +42,20 @@ public class DataModule {
   private static final String TWITCH_ACCOUNT_TABLE_NAME = "TwitchAccounts";
   private static final String TWITCH_TEAM_TABLE_NAME = "TwitchTeams";
   private static final String TWITCH_TEAM_MEMBERSHIP_TABLE_NAME = "TwitchTeamMemberships";
+
+  /**
+   * Provides the BarcodeScans table, which records ticket QR code scans at events.
+   *
+   * @param dynamoDbEnhancedClient enhanced DynamoDB client
+   * @return the table
+   */
+  @Provides
+  @Singleton
+  public DynamoDbTable<BarcodeScan> providesBarcodeScanTable(
+      final DynamoDbEnhancedClient dynamoDbEnhancedClient) {
+    return dynamoDbEnhancedClient.table(
+        BARCODE_SCAN_TABLE_NAME, TableSchema.fromBean(BarcodeScan.class));
+  }
 
   /**
    * Provides the BevyTickets table.

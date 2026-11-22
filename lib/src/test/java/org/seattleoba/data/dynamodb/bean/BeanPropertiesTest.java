@@ -30,6 +30,7 @@ class BeanPropertiesTest {
 
   static Stream<Class<?>> beans() {
     return Stream.of(
+        BarcodeScan.class,
         BevyOrder.class,
         BevyTicket.class,
         EventRegistration.class,

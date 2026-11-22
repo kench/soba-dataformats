@@ -46,6 +46,7 @@ class DataModuleTest {
 
   @Test
   void providesTablesWithProductionNames() {
+    assertEquals("BarcodeScans", dataModule.providesBarcodeScanTable(client).tableName());
     assertEquals("BevyTickets", dataModule.providesBevyTicketTable(client).tableName());
     assertEquals(
         "TwitchAccountsBevyTickets", dataModule.providesEventRegistrationTable(client).tableName());
